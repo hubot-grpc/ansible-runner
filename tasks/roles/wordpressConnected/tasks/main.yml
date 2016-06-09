@@ -1,0 +1,5 @@
+- name: Add Wordpress Config
+  become: yes
+  become_method: sudo
+  template: src=roles/wordpress/templates/wp-config.php dest=/srv/http/wordpress/wp-config.php owner=www-data group=www-data
+

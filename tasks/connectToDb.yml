@@ -1,0 +1,10 @@
+- name: Connect a wordpress instance to a db instance
+  hosts: '{{ appHost }}'
+  gather_facts: False
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    mysql_db_host: '{{ dbHostPrivateIp }}'
+  roles:
+    - wordpressConnected

@@ -1,0 +1,9 @@
+- name: enable mysql remote access
+  become: yes
+  become_method: sudo
+  command: "sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/my.cnf"
+
+- name: restart mysql
+  become: yes
+  become_method: sudo
+  service: name=mysql state=restarted

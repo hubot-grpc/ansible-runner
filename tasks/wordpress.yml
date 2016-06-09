@@ -1,0 +1,10 @@
+- name: Deploy wordpress
+  hosts: '{{ host }}'
+  gather_facts: False
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    mysql_db_host: localhost
+  roles:
+    - wordpress

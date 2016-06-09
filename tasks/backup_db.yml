@@ -1,0 +1,11 @@
+- name: Backup SQL Database
+  hosts: '{{ host }}'
+  gather_facts: False
+  remote_user: ubuntu
+
+  tasks:
+  - name: Create Backup directory
+    file: path=/tmp/revisions state=directory mode=0755
+
+  - name: Backup SQL Database
+    mysql_db: state=dump name=wordpressdb target='{{ revision }}' login_user=wordpress login_password=password

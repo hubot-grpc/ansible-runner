@@ -1,0 +1,12 @@
+- name: Provision ec2 instances running wordpress
+  hosts: '{{ host }}'
+  gather_facts: False
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    mysql_user_host: localhost
+    mysql_db_host: localhost
+  roles:
+    - mysql
+    - wordpress

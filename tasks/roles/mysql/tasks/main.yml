@@ -1,0 +1,15 @@
+- name: Install mysql
+  become: yes
+  become_method: sudo
+  apt: pkg=mysql-server state=installed update_cache=true
+
+- name: Install mysql python bindings
+  become: yes
+  become_method: sudo
+  apt: pkg=python-mysqldb state=installed
+
+- name: Create Wordpress Database
+  mysql_db: name=wordpressdb state=present login_user=root
+
+- name: Create Wordpress User
+  mysql_user: name=wordpress password=password priv=wordpressdb.*:ALL state=present login_user=root host='{{ mysql_user_host }}'
