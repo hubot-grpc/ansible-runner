@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package assignment2;
+package ansible;
 
 message Empty {
 
