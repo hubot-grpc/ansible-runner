@@ -15,7 +15,7 @@ COPY ansible.proto /api/main.proto
 COPY sshkey /home/runner/.ssh
 
 RUN chown -R runner /home/runner && \
-    chmod -R 600 /home/runner/.ssh/* && \
+    chmod -R 600 /home/runner/.ssh && \
     chmod +x /home/runner/ec2.py
 
 WORKDIR /home/runner
