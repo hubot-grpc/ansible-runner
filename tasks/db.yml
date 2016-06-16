@@ -1,0 +1,10 @@
+- name: Install Mysql database
+  hosts: '{{ host }}'
+  gather_facts: False
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    mysql_user_host: '%'
+  roles:
+    - mysql-remote

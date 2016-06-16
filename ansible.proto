@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package ansible;
+
+message Empty {
+
+}
+
+message NewInstanceParams {
+  string image = 1;
+  string type = 2;
+  string securityGroup = 3;
+  string keyName = 4;
+  string availabilityZone = 5;
+}
+
+message LoadBalancedWordpressParams {
+  string name = 1;
+}
+
+message InstanceId {
+  string id = 1;
+}
+
+message InstanceIds {
+  repeated string ids = 1;
+}
+
+message WriteTag {
+  string key = 1;
+  string value = 2;
+  string id = 3;
+}
+
+message ShellOutput {
+  string text = 1;
+}
+
+message DatabaseBackup {
+  string host = 1;
+  string revision = 2;
+}
+
+message InstanceDescription {
+  string id = 1;
+  string state = 2;
+  string keyName = 3;
+  string publicIp = 4;
+  string privateIp = 5;
+  string publicDns = 6;
+  string privateDns = 7;
+  string type = 8;
+  string image = 9;
+  string availabilityZone = 10;
+}
+
+message LoadBalancedWordpressDescription {
+  string name = 1;
+  string dns = 2;
+  repeated InstanceId appServers = 3;
+  InstanceId databaseServer = 4;
+}
+
+message AppDbConnection {
+  InstanceId appHost = 1;
+  InstanceId dbHost = 2;
+}
+
+message Region {
+  string name = 1;
+}
+
+service WordpressOps {
+  rpc deployWordpress(InstanceId) returns (stream ShellOutput) {}
+
+  rpc deployWordpressSingle(InstanceId) returns (stream ShellOutput) {}
+
+  rpc deployDb(InstanceId) returns (stream ShellOutput) {}
+
+  rpc connectToDb(AppDbConnection) returns (stream ShellOutput) {}
+
+  rpc backupDb(DatabaseBackup) returns (stream ShellOutput) {}
+
+  rpc restoreDb(DatabaseBackup) returns (stream ShellOutput) {}
+
+  rpc createLoadBalancedWordpress(LoadBalancedWordpressParams) returns (stream ShellOutput) {}
+
+  rpc describeLoadBalancedWordpress(LoadBalancedWordpressParams) returns (LoadBalancedWordpressDescription) {}
+
+  rpc scaleOut(LoadBalancedWordpressParams) returns (stream ShellOutput) {}
+
+  rpc scaleIn(LoadBalancedWordpressParams) returns (stream ShellOutput) {}
+}
+
+service AWSOps {
+  rpc changeRegion(Region) returns (Empty) {}
+
+  rpc createInstance(NewInstanceParams) returns (InstanceId) {}
+
+  rpc terminateInstances(InstanceIds) returns (ShellOutput) {}
+
+  rpc describeInstances(Empty) returns (stream InstanceDescription) {}
+
+  rpc tagResource(WriteTag) returns (Empty) {}
+}

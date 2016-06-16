@@ -1,0 +1,9 @@
+{
+  "name": "wordpress-ops",
+  "version": "0.1.0",
+  "dependencies": [
+    "grpc",
+    "aws-sdk",
+    "node-ansible"
+  ]
+}

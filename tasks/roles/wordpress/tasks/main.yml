@@ -1,0 +1,29 @@
+- name: Install php-mysql
+  become: yes
+  become_method: sudo
+  apt: pkg=php5-mysql state=installed update_cache=true
+
+- name: Download wordpress
+  get_url: url=https://wordpress.org/latest.tar.gz dest=/tmp/latest.tar.gz
+
+- name: Extract wordpress
+  become: yes
+  become_method: sudo
+  unarchive: src=/tmp/latest.tar.gz dest=/srv/http/ copy=no group=www-data owner=www-data # creates=/srv/http/wordpress
+
+- name: Add Wordpress Config
+  become: yes
+  become_method: sudo
+  template: src=roles/wordpress/templates/wp-config.php dest=/srv/http/wordpress/wp-config.php owner=www-data group=www-data
+
+- name: Add Wordpress Site Config
+  become: yes
+  become_method: sudo
+  copy: src=roles/wordpress/files/wordpress_nginx_config dest=/etc/nginx/sites-available/wordpress owner=root group=root
+
+- name: Enable Wordpress Site Config
+  become: yes
+  become_method: sudo
+  file: src=/etc/nginx/sites-available/wordpress dest=/etc/nginx/sites-enabled/wordpress state=link
+  notify:
+    - Restart Nginx

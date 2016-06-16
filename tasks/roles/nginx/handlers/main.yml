@@ -1,0 +1,9 @@
+- name: Start Nginx
+  become: yes
+  become_method: sudo
+  service: name=nginx state=started
+
+- name: Restart Nginx
+  become: yes
+  become_method: sudo
+  service: name=nginx state=restarted

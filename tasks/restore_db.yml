@@ -1,0 +1,13 @@
+- name: Restore SQL Database
+  hosts: '{{ host }}'
+  gather_facts: False
+  remote_user: ubuntu
+
+  tasks:
+  - name: Install dependencies
+    become: yes
+    become_method: sudo
+    apt: pkg=python-mysqldb state=installed
+
+  - name: Restore SQL Database
+    mysql_db: state=import name=wordpressdb target='{{ revision }}' login_user=wordpress login_password=password
