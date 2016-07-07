@@ -21,7 +21,7 @@ procedure_options:
       - "Sure {{user.name}}, I created an instance with id *{{response.id}}*"
       - "The id is: *{{response.id}}*. Is there anything else I can do for you, {{user.name}}?"
     defaults:
-      images: ami-fce3c696
+      image: ami-fce3c696
       type: t2.micro
       securityGroup: http+ssh
       keyName: default
