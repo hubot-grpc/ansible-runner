@@ -25,7 +25,7 @@ procedure_options:
       type: t2.micro
       securityGroup: http+ssh
       keyName: default
-      availabilityZone: us-east-1b
+      availabilityZone: us-east-1c
 
   - procedure: .ansible.AWSOps.terminateInstances
     help: "Terminates an EC2 machine"
