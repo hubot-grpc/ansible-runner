@@ -1,0 +1,43 @@
+allow_default_calls: false
+
+procedure_options:
+  - procedure: .ansible.AWSOps.describeInstances
+    help: "Shows all running machines in us-east-1"
+    alias: "list"
+    response_templates:
+      - |
+          *{{response.id}}*
+              state: *{{response.state}}* _as_ *{{response.type}}* _in_ *{{response.availabilityZone}}*
+              reachable via: {{response.publicDns}} or http://{{response.publicIp}}/
+              image: _{{response.image}}_
+
+
+  - procedure: .ansible.AWSOps.createInstance
+    help: "Creates a new EC2 machine in us-east-1"
+    alias: "create"
+    allowed_users:
+      - matthias
+    response_templates:
+      - "Sure {{user.name}}, I created an instance with id *{{response.id}}*"
+      - "The id is: *{{response.id}}*. Is there anything else I can do for you, {{user.name}}?"
+    defaults:
+      images: ami-fce3c696
+      type: t2.micro
+      securityGroup: http+ssh
+      keyName: default
+      availabilityZone: us-east-1b
+
+  - procedure: .ansible.AWSOps.terminateInstances
+    help: "Terminates an EC2 machine"
+    alias: "terminate"
+    allowed_users:
+      - matthias
+    response_templates:
+      - "I love destroying things!"
+      - "Sure ..."
+
+  - procedure: .ansible.WordpressOps.deployWordpressSingle
+    help: "Deploys wordpress and a mysql database on a single machine"
+    alias: "deploy wordpress"
+    allowed_users:
+      - matthias

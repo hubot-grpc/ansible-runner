@@ -22,4 +22,6 @@ WORKDIR /home/runner
 USER runner
 RUN npm install
 
+COPY config.yml /api/config.yml
+
 CMD ["node", "server.js"]
