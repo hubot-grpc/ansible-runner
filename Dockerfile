@@ -1,5 +1,9 @@
 FROM ubuntu:16.04
 
+VOLUME /api
+
+EXPOSE 50051
+
 RUN useradd -m runner
 
 RUN apt-get update && apt-get install -y ansible python-pip curl
